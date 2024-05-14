@@ -10,4 +10,5 @@ extension FieldKey {
     static let lastName: FieldKey = "last_name"
     static let teacherID: FieldKey = "teacher_id"
     static let subjectID: FieldKey = "subject_id"
+    static let studentID: FieldKey = "student_id"
 }

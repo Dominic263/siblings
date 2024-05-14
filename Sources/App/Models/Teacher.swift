@@ -16,8 +16,11 @@ final class Teacher: Model {
     @Field(key: .lastName)
     var lastName: String
     
-    @Siblings(through: TeacherSubjectPivot.self, from: \.$teacher, to: \.$subject)
+    @Siblings(through: TeacherSubjectStudentPivot.self, from: \.$teacher, to: \.$subject)
     var subjects: [Subject]
+    
+    @Siblings(through: TeacherSubjectStudentPivot.self, from: \.$teacher, to: \.$student)
+    var students: [Student]
     
     init() {}
     

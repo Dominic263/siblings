@@ -8,6 +8,13 @@ struct StudentController: RouteCollection {
         
         // POST: student/create/
         api.post("create", use: createStudentHandler)
+        
+        //TODO: POST Given a subjectID student can enroll into a class
+        
+        //TODO: POST Given a subjectID student can unenroll from a class
+        
+        //TODO: Given a studentID student can query a class and other students in the class and also the instructor teaching the class
+        
     }
     
     @Sendable
@@ -17,4 +24,6 @@ struct StudentController: RouteCollection {
         try await student.save(on: req.db)
         return try student.toPublic()
     }
+    
+    
 }

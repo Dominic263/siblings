@@ -18,6 +18,8 @@ struct TeacherController: RouteCollection {
         
         // POST: /teachers/all
         api.get("all", use: getAllTeachersHandler)
+        
+        //TODO: Create a GET endpoint to retrieve a teacher with all classes and students in those classes
     }
     
     @Sendable

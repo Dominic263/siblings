@@ -2,9 +2,9 @@ import Foundation
 import Fluent
 import Vapor
 
-final class TeacherSubjectPivot: Model {
+final class TeacherSubjectStudentPivot: Model {
     
-    static let schema = "teacher+subject"
+    static let schema = "teacher+subject+student"
     
     @ID(key: .id)
     var id: UUID?
@@ -15,12 +15,21 @@ final class TeacherSubjectPivot: Model {
     @Parent(key: FieldKey.subjectID)
     var subject: Subject
     
+    @Parent(key: FieldKey.studentID)
+    var student: Student
+    
     init() {}
     
-    init(id: UUID? = nil, teacher: Teacher, subject: Subject) {
+    init(
+        id: UUID? = nil,
+        teacher: Teacher,
+        subject: Subject,
+        student: Student
+    ) throws {
         self.id = id
-        self.teacher = teacher
-        self.subject = subject
+        self.$teacher.id = try teacher.requireID()
+        self.$subject.id = try subject.requireID()
+        self.$student.id = try student.requireID()
     }
     
 }

@@ -15,6 +15,12 @@ final class Student: Model {
     @Field(key: .lastName)
     var lastName: String
     
+    @Siblings(through: TeacherSubjectStudentPivot.self, from: \.$student, to: \.$teacher)
+    var teachers: [Teacher]
+    
+    @Siblings(through: TeacherSubjectStudentPivot.self, from: \.$student, to: \.$subject)
+    var subjects: [Subject]
+    
     init() { }
     
     init(id: UUID? = nil, firstName: String, lastName: String) {
