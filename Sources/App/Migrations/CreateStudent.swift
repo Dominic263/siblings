@@ -9,8 +9,8 @@ struct CreateStudent: AsyncMigration {
             .id()
             .field(.firstName, .string)
             .field(.lastName, .string)
+            .field(.schoolID, .uuid, .required, .references("schools", .id))
             .create()
-            
     }
     
     func revert(on database: any Database) async throws {

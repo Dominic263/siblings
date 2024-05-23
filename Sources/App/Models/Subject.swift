@@ -19,11 +19,15 @@ final class Subject: Model {
     @Siblings(through: TeacherSubjectStudentPivot.self, from: \.$subject, to: \.$student)
     var students: [Student]
     
+    @Parent(key: .schoolID)
+    var school: School
+    
     init() {}
     
-    init(id: UUID? = nil, course: String) {
+    init(id: UUID? = nil, course: String, schoolID: School.IDValue) {
         self.id = id
         self.course = course
+        self.$school.id = schoolID
     }
 }
 
@@ -34,13 +38,21 @@ extension Subject: Content {
         let id: UUID
     }
     
-    func toPublicTeachers() throws -> [Teacher.Public] {
+    func toPublic() throws -> Public {
+        return .init(course: self.course, id: try self.requireID())
+    }
+    
+    func withTeachers() throws -> [Teacher.Public] {
         return try self.teachers.map { teacher in
             try teacher.toPublic()
         }
     }
     
-    func toPublic() throws -> Public {
-        return .init(course: self.course, id: try self.requireID())
+    func withStudents() throws -> [Student.Public] {
+        return try self.students.map { student in
+            try student.toPublic()
+        }
     }
+    
+    
 }
