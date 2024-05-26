@@ -1,7 +1,5 @@
-import Foundation
 import Vapor
 import Fluent
-
 
 final class Subject: Model {
     
@@ -13,10 +11,10 @@ final class Subject: Model {
     @Field(key: .course)
     var course: String
     
-    @Siblings(through: TeacherSubjectStudentPivot.self, from: \.$subject, to: \.$teacher)
+    @Siblings(through: SubjectTeacher.self, from: \.$subject, to: \.$teacher)
     var teachers: [Teacher]
     
-    @Siblings(through: TeacherSubjectStudentPivot.self, from: \.$subject, to: \.$student)
+    @Siblings(through: SubjectStudent.self, from: \.$subject, to: \.$student)
     var students: [Student]
     
     @Parent(key: .schoolID)
@@ -39,20 +37,6 @@ extension Subject: Content {
     }
     
     func toPublic() throws -> Public {
-        return .init(course: self.course, id: try self.requireID())
+        return Subject.Public(course: self.course, id: try self.requireID())
     }
-    
-    func withTeachers() throws -> [Teacher.Public] {
-        return try self.teachers.map { teacher in
-            try teacher.toPublic()
-        }
-    }
-    
-    func withStudents() throws -> [Student.Public] {
-        return try self.students.map { student in
-            try student.toPublic()
-        }
-    }
-    
-    
 }

@@ -21,7 +21,8 @@ public func configure(_ app: Application) async throws {
     app.migrations.add(CreateStudent())
     app.migrations.add(CreateTeacher())
     app.migrations.add(CreateSubject())
-    app.migrations.add(CreateTeacherSubjectStudentPivot())
+    app.migrations.add(CreateSubjectStudent())
+    app.migrations.add(CreateSubjectTeacher())
     
     try await app.autoMigrate()
     

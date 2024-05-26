@@ -7,7 +7,7 @@ struct CreateSubject: AsyncMigration {
         try await database.schema("subjects")
             .id()
             .field(.course, .string, .required)
-            .field(.schoolID, .uuid, .required, .references("schools", .id))
+            .field(.schoolID, .uuid, .required, .references("schools", .id, onDelete: .cascade))
             .create()
     }
     
